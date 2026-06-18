@@ -1,0 +1,16 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.0"
+    }
+  }
+  # Note: For production assignments, you can configure an S3 backend here.
+  # To keep local validation straightforward without pre-requisite buckets, we'll use local state.
+}
+
+provider "aws" {
+  region     = var.aws_region
+  access_key = var.aws_access_key
+  secret_key = var.aws_secret_key
+}

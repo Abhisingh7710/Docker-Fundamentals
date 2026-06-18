@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Submission</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 50px; background-color: #f4f4f9; }
+        .form-container { max-width: 400px; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
+        .form-group input, .form-group textarea { width: 100%; padding: 8px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; }
+        button { background: #007BFF; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background: #0056b3; }
+        #response { margin-top: 20px; padding: 10px; border-radius: 4px; display: none; }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <h2>User Registration Form</h2>
+    <form id="userForm">
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+            <label for="message">Message:</label>
+            <textarea id="message" name="message" rows="4"></textarea>
+        </div>
+        <button type="submit">Submit to Flask</button>
+    </form>
+
+    <div id="response"></div>
+</div>
+
+<script>
+    document.getElementById('userForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const responseDiv = document.getElementById('response');
+        
+        const formData = {
+            name: document.getElementById('name').value,
+            email: document.getElementById('email').value,
+            message: document.getElementById('message').value
+        };
+
+        try {
+            const res = await fetch('/send-to-backend', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            });
+            const data = await res.json();
+            
+            responseDiv.style.display = 'block';
+            if(data.status === 'success') {
+                responseDiv.style.background = '#d4edda';
+                responseDiv.style.color = '#155724';
+                responseDiv.innerHTML = `<strong>Success:</strong> ${data.message}`;
+            } else {
+                responseDiv.style.background = '#f8d7da';
+                responseDiv.style.color = '#721c24';
+                responseDiv.innerHTML = `<strong>Error:</strong> ${data.message}`;
+            }
+        } catch (err) {
+            responseDiv.style.display = 'block';
+            responseDiv.style.background = '#f8d7da';
+            responseDiv.style.color = '#721c24';
+            responseDiv.innerText = 'Failed to process request.';
+        }
+    });
+</script>
+</body>
+</html>

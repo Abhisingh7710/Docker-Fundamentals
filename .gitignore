@@ -1,0 +1,43 @@
+# Node dependencies
+node_modules/
+npm-debug.log*
+
+# Python virtual environment & cache
+__pycache__/
+*.pyc
+venv/
+.env
+
+# IDE environments
+.vscode/
+.idea/
+
+# OS specific files
+.DS_Store
+Thumbs.db
+
+
+# Ignore private keys
+*.pem
+
+# Local terraform directories
+**/.terraform/*
+
+# Downloaded plugins
+*.executable
+
+# Ignore terraform state files
+*.tfstate
+*.tfstate.*
+crash.log
+crash.*.log
+
+# Ignore override files
+override.tf
+override.tf.json
+*._override.tf
+*._override.tf.json
+
+# Ignore CLI configuration files
+.terraformrc
+terraform.rc

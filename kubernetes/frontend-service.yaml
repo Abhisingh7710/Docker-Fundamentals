@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: express-frontend-service
+spec:
+  selector:
+    app: express-frontend
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
+      nodePort: 30080  # Exposes the service on port 30080 of the local cluster node
+  type: NodePort

@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-backend-deployment
+  labels:
+    app: flask-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flask-backend
+  template:
+    metadata:
+      labels:
+        app: flask-backend
+    spec:
+      containers:
+      - name: flask-backend
+        image: abhisingh7710/flask-backend:latest  # Pulls directly from your Docker Hub
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5000
